@@ -41,7 +41,9 @@ func _on_item_dropped(item: InventoryItem, drop_position: Vector2) -> void:
 	if not inventory_rect.has_point(drop_position):
 		print("Item dropped outside inventory at: ", drop_position)
 		# Return to original position if no valid drop target
-		item.global_position = item.original_position
+		var tween = create_tween()
+		tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(item, "global_position", item.original_position, 0.2)
 	else:
 		# Reposition within inventory grid
 		reposition_item_in_grid(item, drop_position)

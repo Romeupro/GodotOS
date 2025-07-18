@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmjyglrsf04uo"]
+[gd_scene load_steps=11 format=3 uid="uid://bmjyglrsf04uo"]
 
 [ext_resource type="Script" uid="uid://crccellk2oo41" path="res://Scenes/Main/desktop_file_manager.gd" id="1_c0q37"]
 [ext_resource type="Script" uid="uid://fgth35grbgyv" path="res://Scenes/Main/wallpaper.gd" id="1_xkkt2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bwyybu5i3kid" path="res://Scenes/Main/Boot Splash/boot_splash.tscn" id="3_ifoxq"]
 [ext_resource type="Script" path="res://Scenes/Inventory/InventoryManager.gd" id="4_inv"]
 [ext_resource type="Script" path="res://Scenes/Inventory/Table.gd" id="5_table"]
+[ext_resource type="PackedScene" uid="uid://d2j8vh7xp5k8m" path="res://Scenes/Inventory/SimpleShop.tscn" id="6_shop"]
 
 [sub_resource type="GDScript" id="GDScript_fyyaf"]
 resource_name = "MainScene"
@@ -14,6 +15,13 @@ script/source = "extends Control
 func _ready() -> void:
 	# Just shoves this back on ready so autoloads like the context menu can be in front
 	get_parent().move_child.call_deferred(self, 0)
+	
+	# Connect shop to inventory
+	var shop = $Stream/SimpleShop
+	var inventory = $Stream/inventory
+	
+	if shop and inventory:
+		shop.item_purchased.connect(inventory.add_item)
 "
 
 [sub_resource type="Gradient" id="Gradient_g3gwb"]
@@ -23,6 +31,30 @@ colors = PackedColorArray(0, 0, 0, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_agg5v"]
 gradient = SubResource("Gradient_g3gwb")
 width = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory"]
+bg_color = Color(0.2, 0.2, 0.2, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.4, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_table"]
+bg_color = Color(0.6, 0.4, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.3, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -112,6 +144,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory")
+
+[node name="InventoryLabel" type="Label" parent="Stream/inventory"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 25.0
+grow_horizontal = 0
+text = "Inventory"
+horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="Stream/inventory"]
 layout_mode = 1
@@ -126,7 +172,7 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 8
 
-[node name="Table" type="Control" parent="Stream"]
+[node name="Table" type="Control" parent="Stream" groups=["drop_target"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -148,6 +194,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_table")
 
 [node name="DropZone" type="Control" parent="Stream/Table"]
 layout_mode = 1
@@ -177,6 +224,17 @@ grow_vertical = 2
 text = "Table"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SimpleShop" parent="Stream" instance=ExtResource("6_shop")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -140.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 100.0
+grow_horizontal = 0
 
 [node name="Boot Splash" parent="." instance=ExtResource("3_ifoxq")]
 visible = false

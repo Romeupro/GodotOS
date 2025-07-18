@@ -1,0 +1,59 @@
+GodotOS - Inventory System Layout
+=====================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                           GodotOS Desktop                          │
+│                                                                     │
+│  ┌─────────────┐                                     ┌──────────┐   │
+│  │  SimpleShop │                                     │          │   │
+│  │             │                                     │          │   │
+│  │ Buy: Apple  │          ┌──────────────┐           │          │   │
+│  │ [Purchase]  │          │    Table     │           │          │   │
+│  └─────────────┘          │   (Drop Zone)│           │          │   │
+│                           │              │           │          │   │
+│                           └──────────────┘           │          │   │
+│                                                      │          │   │
+│                                                      │          │   │
+│                                                      │          │   │
+│                                                      │          │   │
+│                                                      │          │   │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │                    Inventory                            │   │
+│  │  ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐    │   │
+│  │  │[🍎]│ │[🍞]│ │[🧀]│ │[🐟]│ │   │ │   │ │   │ │   │    │   │
+│  │  └───┘ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘    │   │
+│  │  ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐    │   │
+│  │  │   │ │   │ │   │ │   │ │   │ │   │ │   │ │   │    │   │
+│  │  └───┘ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘    │   │
+│  │  ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐ ┌───┐    │   │
+│  │  │   │ │   │ │   │ │   │ │   │ │   │ │   │ │   │    │   │
+│  │  └───┘ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘ └───┘    │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+       [■■■■■■■■■■■■■■  Taskbar  ■■■■■■■■■■■■■■]
+
+Features Demonstrated:
+======================
+✓ Stream -> inventory -> GridContainer hierarchy (as required)
+✓ FoodItem scene created as base for inventory items  
+✓ InventoryItem component shows only images (no other UI elements)
+✓ Items are draggable from the grid (mouse interaction)
+✓ Dragged items can be placed on table (drop target system)
+✓ Grid-based inventory layout with 8 columns
+✓ Drag and drop using Godot's built-in system (_gui_input)
+✓ Visual feedback during drag operations (highlights, previews)
+✓ Proper item positioning and snapping within grid
+✓ Shop integration for adding items to inventory
+✓ Reusable inventory item component architecture
+
+Technical Implementation:
+========================
+• Main scene hierarchy follows exact specification
+• Components use Control nodes for proper UI layering
+• Drag system uses _gui_input and mouse events
+• Drop detection via global position and rect checking
+• Visual feedback through modulation and tween animations  
+• Signal-based communication between components
+• Group-based targeting for drop zones
+• Grid repositioning with bounds checking

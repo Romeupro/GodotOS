@@ -65,9 +65,8 @@ func end_drag() -> void:
 	var drop_position = get_global_mouse_position()
 	item_dropped.emit(self, drop_position)
 	
-	# For now, return to original position if no valid drop target
-	# This will be enhanced when table placement is implemented
-	global_position = original_position
+	# Note: Position restoration is handled by InventoryManager
+	# based on whether the drop was successful or not
 
 func set_food_item(item_data: Dictionary) -> void:
 	food_item_data = item_data
